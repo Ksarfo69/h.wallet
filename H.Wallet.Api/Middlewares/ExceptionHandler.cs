@@ -1,4 +1,6 @@
+using System.Runtime.CompilerServices;
 using H.Wallet.Api.Exceptions;
+using H.Wallet.Api.Models;
 
 namespace H.Wallet.Api.middlewares;
 
@@ -27,10 +29,15 @@ public class ExceptionHandler
         }
         catch (Exception e)
         {
+            string msg = new ApiResponse
+            {
+                Success = false, Message = "An error occurred, please try again later."
+            }.ToString();
             context.Response.StatusCode = 500;
-            await context.Response.WriteAsync("An error occurred, please try again later.");
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(msg);
 
-            Console.WriteLine(e);
+            throw new RuntimeWrappedException(e);
         }
     }
 }

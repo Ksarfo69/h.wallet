@@ -38,7 +38,7 @@ public record HUserRegistration
     public string Username { get; init; }
     
     [Required]
-    [StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 50 characters long.")]
+    [StringLength(50, MinimumLength = 6, ErrorMessage = "Phone number must be between 6 and 50 characters long.")]
     [RegularExpression(@"^\d+$", ErrorMessage = "Phone number must contain only numbers.")]
     public string PhoneNumber { get; init; }
 

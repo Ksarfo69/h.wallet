@@ -17,4 +17,9 @@ public class ApiResponse
 public class ApiResponse<T> : ApiResponse
 {
     public T Data { get; set; }
+    
+    public override string ToString()
+    {
+        return JsonSerializer.Serialize(this);
+    }
 }

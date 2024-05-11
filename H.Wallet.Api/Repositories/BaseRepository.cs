@@ -17,6 +17,8 @@ public abstract class BaseRepository<T> where T : BaseModel
     public abstract Task<T?> Get(Expression<Func<T, bool>> condition);
     
     public abstract Task<List<T>> GetAll(Expression<Func<T, bool>> condition);
+
+    public abstract Task<List<R>> GetAll<R>(Expression<Func<T, R>> feature, Expression<Func<T, bool>> condition);
     
     public abstract Task<List<T>> GetAll();
     

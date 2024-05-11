@@ -15,11 +15,8 @@ public class Wallet : BaseModel
     public WalletScheme Scheme { get; set; }
     
     [Required] 
-    [StringLength(6)] 
+    [StringLength(50, MinimumLength = 6)]
     public string Number { get; set; }
-    
-    [Required] 
-    public string PANToken { get; set; } // tokenized primary account number of scheme
     
     [Required] public HUser Owner { get; set; }
 
@@ -49,7 +46,7 @@ public record WalletRegistration
     public WalletScheme Scheme { get; init; }
 
     [Required]
-    [StringLength(50, MinimumLength = 6, ErrorMessage = "Wallet name must be between 6 and 50 characters long.")]
+    [StringLength(50, MinimumLength = 6, ErrorMessage = "PAN must be between 6 and 50 characters long.")]
     public string PAN { get; init; }
 
     public WalletRegistration(string name, WalletScheme scheme, string PAN)

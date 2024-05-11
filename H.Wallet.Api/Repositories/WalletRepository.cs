@@ -9,6 +9,7 @@ public interface IWalletRepository
 {
     public Task Add(Models.Wallet entity);
     public Task<Models.Wallet?> Get(Expression<Func<Models.Wallet, bool>> condition);
+    public Task<List<T>> GetAll<T>(Expression<Func<Models.Wallet, T>> feature, Expression<Func<Models.Wallet, bool>> condition);
     public Task<List<Models.Wallet>> GetAll(Expression<Func<Models.Wallet, bool>> condition);
     public Task<List<Models.Wallet>> GetAll();
     public Task Remove(Models.Wallet entity);
@@ -25,6 +26,11 @@ public class WalletRepository : BaseRepository<Models.Wallet>, IWalletRepository
     public override async Task<Models.Wallet?> Get(Expression<Func<Models.Wallet, bool>> condition)
     {
         return await _context.Wallets.Include(w => w.Owner).FirstOrDefaultAsync(condition);
+    }
+    
+    public override async Task<List<T>> GetAll<T>(Expression<Func<Models.Wallet, T>> feature, Expression<Func<Models.Wallet, bool>> condition)
+    {
+        return await _context.Wallets.Where(condition).Select(feature).ToListAsync();
     }
     
     public override async Task<List<Models.Wallet>> GetAll(Expression<Func<Models.Wallet, bool>> condition)
