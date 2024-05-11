@@ -18,9 +18,16 @@ public class HUser : BaseModel
     [Required] 
     public byte[] PasswordSalt { get; set; }
     
+    [Required]
+    public List<Wallet> Wallets { get; set; } = new List<Wallet>();
+    
     public HUserResponseDto ToResponseDto()
     {
-        return new HUserResponseDto(Username, PhoneNumber, CreatedAt);
+        return new HUserResponseDto(
+            Username, 
+            PhoneNumber, 
+            CreatedAt, 
+            Wallets.Select(w => w.ToResponseDto()).ToList());
     }
 }
 
@@ -72,5 +79,6 @@ public record HUserLogin
 public record HUserResponseDto(
     string username,
     string phoneNumber,
-    DateTime createdAt
+    DateTime createdAt,
+    List<WalletResponseDto> wallets
 );
