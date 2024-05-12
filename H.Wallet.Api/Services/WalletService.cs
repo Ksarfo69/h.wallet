@@ -51,23 +51,15 @@ public class WalletService : IWalletService
         var walletNumber = walletType == WalletType.Card ? wr.PAN.Substring(0, 6) : wr.PAN;
         
         // check if wallet already added by user
-        var existingWalletNumbers = await _repository
-            .GetAll<string>(
-                feature: w=> w.Number,
-                condition: w => string.Equals(w.Owner.Username, authenticatedHUser.Username));
-        
-        foreach (var wn in existingWalletNumbers)
+        if (authenticatedHUser.Wallets.FirstOrDefault(w => w.Number.Equals(walletNumber)) != default)
         {
-            if (wn.Equals(walletNumber))
-            {
-                var msg = "Wallet already exists.";
-                _logger.LogInformation($"Failed to create wallet for user: {authenticatedHUser.PhoneNumber}. Reason: {msg}");
-                throw new AlreadyExistsException("Wallet already exists.");
-            }
+            var msg = "Wallet already exists.";
+            _logger.LogInformation($"Failed to create wallet for user: {authenticatedHUser.PhoneNumber}. Reason: {msg}");
+            throw new AlreadyExistsException("Wallet already exists.");
         }
         
         // check user's existing wallets count
-        if (existingWalletNumbers.Count >= MAX_WALLET_COUNT)
+        if (authenticatedHUser.Wallets.Count >= MAX_WALLET_COUNT)
         {
             var msg = "Maximum number of wallets reached.";
             _logger.LogInformation($"Failed to create wallet for user: {authenticatedHUser.PhoneNumber}. Reason: {msg}");
@@ -121,11 +113,8 @@ public class WalletService : IWalletService
     public async Task<ApiResponse<List<WalletResponseDto>>> GetWalletsByUser(HUser authenticatedHUser)
     {
         _logger.LogInformation($"Retrieving all wallets for user: {authenticatedHUser.PhoneNumber}");
-        
-        var existingWallets = await _repository
-            .GetAll(w => string.Equals(w.Owner.Username, authenticatedHUser.Username));
 
-        var responseDtos = existingWallets.Select(w => w.ToResponseDto()).ToList();
+        var responseDtos = authenticatedHUser.Wallets.Select(w => w.ToResponseDto()).ToList();
         
         _logger.LogInformation($"Retrieved all wallets for user: {authenticatedHUser.PhoneNumber} successfully.");
         

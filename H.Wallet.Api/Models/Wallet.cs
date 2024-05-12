@@ -9,16 +9,16 @@ public class Wallet : BaseModel
     public string Name { get; set; }
     
     [Required] 
-    public WalletType Type { get; set; }
+    public WalletType Type { get; init; }
     
     [Required] 
-    public WalletScheme Scheme { get; set; }
+    public WalletScheme Scheme { get; init; }
     
     [Required] 
     [StringLength(50, MinimumLength = 6)]
-    public string Number { get; set; }
+    public string Number { get; init; }
     
-    [Required] public HUser Owner { get; set; }
+    [Required] public HUser Owner { get; init; }
 
     public WalletResponseDto ToResponseDto()
     {

@@ -15,7 +15,7 @@ public class ServiceException : Exception
     }
 
     public HttpStatusCode Code => _code;
-    public ApiResponse<string> Response => new ApiResponse<string>{Success = false, Message = _message};
+    public ApiResponse Response => new ApiResponse {Success = false, Message = _message};
 }
 
 public class NotFoundException : ServiceException

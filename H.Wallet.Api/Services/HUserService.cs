@@ -14,7 +14,7 @@ public interface IHUserService
 {
     Task<ApiResponse<string>> Register(HUserRegistration r);
     Task<ApiResponse<string>> Login(HUserLogin l);
-    Task<ApiResponse<HUserResponseDto>> GetHUserDetails(string phoneNumber);
+    Task<ApiResponse<HUserResponseDto>> GetHUserDetails(ClaimsPrincipal user);
     Task<HUser> GetAuthenticatedUser(ClaimsPrincipal user);
     Task<HUser?> GetHUser(string phoneNumber);
 }
@@ -129,22 +129,11 @@ public class HUserService : IHUserService
         };
     }
 
-    public async Task<ApiResponse<HUserResponseDto>> GetHUserDetails(string phoneNumber)
+    public async Task<ApiResponse<HUserResponseDto>> GetHUserDetails(ClaimsPrincipal user)
     {
-        _logger.LogInformation($"Retrieving account details for user: {phoneNumber}");
-        
-        // check user with provided credentials exists
-        HUser? exists = await GetHUser(phoneNumber);
-        if (exists == default)
-        {
-            var msg = $"User with phone number: {phoneNumber} does not exist";
-            _logger.LogInformation($"Failed to retrieve account details for user: {phoneNumber}. Reason: {msg}");
-            throw new BadRequestException(msg);
-        }
+        var exists = await GetAuthenticatedUser(user);
 
         HUserResponseDto responseDto = exists.ToResponseDto();
-        
-        _logger.LogInformation($"Retrieved account details for user: {phoneNumber} successfully.");
         
         return new ApiResponse<HUserResponseDto>
         {

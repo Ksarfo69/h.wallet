@@ -4,6 +4,6 @@ namespace H.Wallet.Api.Models;
 
 public class BaseModel
 {
-    [Key] public Guid Id { get; private set; } = Guid.NewGuid();
-    [Required] public DateTime CreatedAt { get; } = DateTime.Now;
+    [Key] public Guid Id { get; init; } = Guid.NewGuid();
+    [Required] public DateTime CreatedAt { get; init; } = DateTime.Now;
 }

@@ -6,20 +6,20 @@ public class HUser : BaseModel
 {
     [Required] 
     [StringLength(10, MinimumLength = 6)]
-    public string Username { get; set; }
+    public string Username { get; init; }
     
     [Required]
     [StringLength(20, MinimumLength = 6)]
     public string PhoneNumber { get; init; }
     
     [Required] 
-    public byte[] PasswordHash { get; set; }
+    public byte[] PasswordHash { get; init; }
     
     [Required] 
-    public byte[] PasswordSalt { get; set; }
+    public byte[] PasswordSalt { get; init; }
     
     [Required]
-    public List<Wallet> Wallets { get; set; } = new List<Wallet>();
+    public List<Wallet> Wallets { get; init; } = new List<Wallet>();
     
     public HUserResponseDto ToResponseDto()
     {
