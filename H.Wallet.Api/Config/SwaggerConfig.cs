@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace H.Wallet.Api.Utils;
+namespace H.Wallet.Api.Config;
 
 public class SecureEndpointOperationFilter : IOperationFilter
 {

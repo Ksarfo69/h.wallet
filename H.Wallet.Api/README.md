@@ -1,7 +1,7 @@
 # HWallet API
 
 ## Swagger Docs
-`https://localhost:7141`
+`https://localhost:7141/swagger`
 
 # Supported Wallet Schemes.
 - Visa - 4XXXXXXXXXXXXXXX (16 digits)

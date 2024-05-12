@@ -1,4 +1,5 @@
 using System.Text;
+using H.Wallet.Api.Config;
 using H.Wallet.Api.Data;
 using H.Wallet.Api.Enums;
 using H.Wallet.Api.middlewares;

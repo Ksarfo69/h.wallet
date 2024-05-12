@@ -41,7 +41,7 @@ public class HUserController : Controller
     [Authorize]
     [SwaggerOperation(Summary = "Get user details", Description = "Retrieves user details by phone number")]
     [SwaggerResponse(200, "User details retrieved successfully", typeof(ApiResponse<HUserResponseDto>))]
-    [SwaggerResponse(401, "Unauthorized if the user does not exist", typeof(string))]
+    [SwaggerResponse(401, "Unauthorized", typeof(string))]
     public async Task<IActionResult> GetMyAccountDetails()
     {
         var res = await _service.GetHUserDetails(User);
