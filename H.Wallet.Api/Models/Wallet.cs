@@ -47,6 +47,7 @@ public record WalletRegistration
 
     [Required]
     [StringLength(50, MinimumLength = 6, ErrorMessage = "PAN must be between 6 and 50 characters long.")]
+    [RegularExpression(@"^\d+$", ErrorMessage = "Primary Account Number (PAN) must contain only numbers.")]
     public string PAN { get; init; }
 
     public WalletRegistration(string name, WalletScheme scheme, string PAN)

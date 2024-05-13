@@ -13,3 +13,15 @@
 - Vodafone - 23320XXXXXXX, 23330XXXXXXX, 23331XXXXXXX, 23332XXXXXXX, 23333XXXXXXX, 23334XXXXXXX, 23335XXXXXXX, 23336XXXXXXX, 23337XXXXXXX, 23338XXXXXXX, 23339XXXXXXX, 23350XXXXXXX (12 digits)
 
 - AirtelTigo - 23326XXXXXXX, 23356XXXXXXX, 233307XXXXXX, 233317XXXXXX, 233327XXXXXX, 233337XXXXXX, 233347XXXXXX, 233357XXXXXX, 233367XXXXXX, 233377XXXXXX, 233387XXXXXX, 233397XXXXXX, 23327XXXXXXX, 23329XXXXXXX, 23357XXXXXXX (12 digits)
+
+# Field Constraints
+## User registration
+- Username - Between 6 and 10 characters 
+- Phone number - Between 6 and 50 characters, contain only numbers.
+- Password - Between 6 and 50 characters
+- Confirm Password - Must match Password field.
+
+## Wallet registration
+- Name - Between 1 and 50 characters
+- Scheme - A type of supported wallet scheme from above.
+- PAN - Between 6 and 50 characters, contain only numbers.
