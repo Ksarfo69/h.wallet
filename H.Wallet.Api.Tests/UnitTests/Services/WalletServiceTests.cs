@@ -142,7 +142,7 @@ public class WalletServiceTests
         Guid walletId = Guid.NewGuid();
         MockRepositoryToReturn((Models.Wallet) null);
 
-        await Assert.ThrowsAsync<NotFoundException>(() => _service.GetWalletById(walletId));
+        await Assert.ThrowsAsync<NotFoundException>(() => _service.GetWalletById(_authenticatedHUser, walletId));
     }
 
     [Fact]
@@ -152,7 +152,7 @@ public class WalletServiceTests
         var wallet = new Models.Wallet { Owner = _authenticatedHUser, Scheme = WalletScheme.Mastercard, Type = WalletType.Card, Number = "512345", Name = "My Wallet" };
         MockRepositoryToReturn(wallet);
 
-        var response = await _service.GetWalletById(walletId);
+        var response = await _service.GetWalletById(_authenticatedHUser, walletId);
 
         Assert.Equal(wallet.Name, response.Data.name);
     }
@@ -176,7 +176,7 @@ public class WalletServiceTests
         Guid walletId = Guid.NewGuid();
         MockRepositoryToReturn((Models.Wallet) null);
 
-        await Assert.ThrowsAsync<NotFoundException>(() => _service.DeleteWalletById(walletId));
+        await Assert.ThrowsAsync<NotFoundException>(() => _service.DeleteWalletById(_authenticatedHUser, walletId));
     }
 
     [Fact]
@@ -186,7 +186,7 @@ public class WalletServiceTests
         var wallet = new Models.Wallet { Owner = _authenticatedHUser };
         MockRepositoryToReturn(wallet);
 
-        var response = await _service.DeleteWalletById(walletId);
+        var response = await _service.DeleteWalletById(_authenticatedHUser, walletId);
 
         Assert.True(response.Success);
     }

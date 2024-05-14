@@ -9,9 +9,9 @@ namespace H.Wallet.Api.Services;
 public interface IWalletService
 {
     Task<ApiResponse<string>> NewWallet(HUser authenticatedHUser, WalletRegistration wr);
-    Task<ApiResponse<WalletResponseDto>> GetWalletById(Guid id);
+    Task<ApiResponse<WalletResponseDto>> GetWalletById(HUser authenticatedHUser, Guid id);
     Task<ApiResponse<List<WalletResponseDto>>> GetWalletsByUser(HUser user);
-    Task<ApiResponse> DeleteWalletById(Guid id);
+    Task<ApiResponse> DeleteWalletById(HUser authenticatedHUser, Guid id);
     Task<Models.Wallet?> FetchWalletById(Guid id);
 }
 
@@ -86,12 +86,12 @@ public class WalletService : IWalletService
         };
     }
 
-    public async Task<ApiResponse<WalletResponseDto>> GetWalletById(Guid id)
+    public async Task<ApiResponse<WalletResponseDto>> GetWalletById(HUser authenticatedUser, Guid id)
     {
         _logger.LogInformation($"Retrieving wallet with id: {id}");
         
         // check if wallet exists
-        var existing = await FetchWalletById(id);
+        var existing = await _repository.Get(w => w.Id == id && w.Owner.Id == authenticatedUser.Id);
         if (existing == default)
         {
             var msg = $"Wallet with id: {id} does not exist.";
@@ -125,11 +125,11 @@ public class WalletService : IWalletService
         };
     }
 
-    public async Task<ApiResponse> DeleteWalletById(Guid id)
+    public async Task<ApiResponse> DeleteWalletById(HUser authenticatedUser, Guid id)
     {
         _logger.LogInformation($"Deleting wallet with id: {id}");
         
-        var existing = await FetchWalletById(id);
+        var existing = await _repository.Get(w => w.Id == id && w.Owner.Id == authenticatedUser.Id);
 
         if (existing == default)
         {

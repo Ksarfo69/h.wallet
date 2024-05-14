@@ -41,8 +41,8 @@ public class WalletController : ControllerBase
     [SwaggerResponse(404, "Not found if wallet does not exist", typeof(string))]
     public async Task<IActionResult> GetWalletById(Guid id)
     {
-        await _hUserService.GetAuthenticatedUser(User);
-        var result = await _walletService.GetWalletById(id);
+        var authenticatedHUser = await _hUserService.GetAuthenticatedUser(User);
+        var result = await _walletService.GetWalletById(authenticatedHUser, id);
         return Ok(result);
     }
     
@@ -64,8 +64,8 @@ public class WalletController : ControllerBase
     [SwaggerResponse(404, "Not found if wallet does not exist", typeof(string))]
     public async Task<IActionResult> DeleteWallet(Guid id)
     {
-        await _hUserService.GetAuthenticatedUser(User);
-        var result = await _walletService.DeleteWalletById(id);
+        var authenticatedHUser = await _hUserService.GetAuthenticatedUser(User);
+        var result = await _walletService.DeleteWalletById(authenticatedHUser, id);
         return Accepted(result);
     }
 }
